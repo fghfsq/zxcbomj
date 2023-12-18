@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { PostEntity } from "src/posts/entity/post.entity"
+import { RoleEntity } from "src/roles/entity/role.entity"
+import { Column, Entity, PrimaryGeneratedColumn,OneToMany,ManyToMany,JoinTable } from "typeorm"
 
 @Entity('users')
 export class UserEntity{
@@ -13,4 +15,14 @@ export class UserEntity{
 
     @Column()
     password:string
+
+    @Column('boolean',{default:false})
+    banned:boolean = false
+
+    @OneToMany(()=>PostEntity,(post)=>post.user)
+    posts:PostEntity[]
+
+    @ManyToMany(()=>RoleEntity)
+    @JoinTable()
+    roles:RoleEntity
 }
