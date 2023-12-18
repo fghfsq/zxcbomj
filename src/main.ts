@@ -1,5 +1,6 @@
 import { NestFactory } from "@nestjs/core"
 import { AppModule } from "./app.module"
+import { ValidationPipe } from "@nestjs/common"
 
 const start = async()=>{
     try{
@@ -7,6 +8,8 @@ const start = async()=>{
 
         const app = await NestFactory.create(AppModule)
 
+        app.useGlobalPipes(new ValidationPipe())
+        
         app.listen(PORT,()=>console.log(`zbs ${PORT}`))
     }
     catch(err){
